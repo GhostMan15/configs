@@ -4,10 +4,13 @@ local plugins = {
     opts = {
         ensure_installed = {
           "rust-analyzer",
-          "csharp-language-server",
+          "omnisharp",
           "gopls",
-          "typescript-language-server"
-          
+          "typescript-language-server",
+          "clangd",
+          "clang-format",
+          "emmet-ls",
+          "phpactor"
       },
     },
   },
@@ -40,7 +43,25 @@ local plugins = {
       require "custom.configs.lint"
       
     end
+  },
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    event = "VeryLazy",
+      opts = function ()
+      return require "custom.configs.null-ls"
+        
+      end
+  },
+  {
+    "nvim-telescope/telescope.nvim",
+    opts = function ()
+      local conf = require("nvchad.configs.telescope")
+      conf.defaults.mappiings.i = {
+        ["<C-j>"] = require("telescope.actions").move_selection_next,
+        ["<Esc>"] = require("telescope.actions").close,
+      }
+      return conf
+    end,
   }
-
 }
 return plugins
